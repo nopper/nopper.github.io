@@ -1,0 +1,282 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Links of the Week | Nopper&#39;s blog</title>
+  <meta name="author" content="Francesco Piccinno">
+  
+  <meta name="description" content="In order to keep this blog up to date I decided to create this periodic blog post format called Links of the week where I share all of my findings during the past week.
+
+The first link I wanna share is a YouTube video, actually a talk from Alex Gaynor (yes one of the contributor of PyPy), with the title &quot;So you want to write an interpreter?&quot; from PyCon&#39;13. It just gives a pretty quick review about the basic concepts for writing an interpreter for a custom DSL, such as Lexer, Parser, AST, Bytecode-compiler and Bytecode-interpreter. If you are a rusty about these basic concepts give it a shot.">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Links of the Week"/>
+  <meta property="og:site_name" content="Nopper&#39;s blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="shortcut icon">
+  <link rel="alternate" href="atom.xml" title="Nopper&#39;s blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  <script>
+  // $(document).ready(function() {
+  //   $('#sidebar').delay(400).animate({ width: '285px' }, 500, function() {
+  //     $('.personal-info').css({display: 'table'}).hide().fadeIn(500);
+  //   });
+  // });
+  </script>
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-9430447-4', 'nopper.me');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+</script>
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignright"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon depth"></div>
+        <time datetime="2014-02-16T12:09:09.000Z"><a href="/2014/02/16/links-of-the-week/">Feb 16 2014</a></time>
+      
+      
+  
+    <h1 class="depth title">Links of the Week</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>In order to keep this blog up to date I decided to create this periodic blog post format called <strong>Links of the week</strong> where I share all of my findings during the past week.</p>
+<ul>
+<li>The first link I wanna share is a YouTube video, actually a talk from <a href="http://alexgaynor.net/" target="_blank">Alex Gaynor</a> (yes one of the contributor of PyPy), with the title &quot;<em>So you want to write an interpreter?</em>&quot; from PyCon&#39;13. It just gives a pretty quick review about the basic concepts for writing an interpreter for a custom DSL, such as Lexer, Parser, AST, Bytecode-compiler and Bytecode-interpreter. If you are a rusty about these basic concepts give it a shot.</li>
+</ul>
+<a id="more"></a>
+
+<ul>
+<li>Well you may wonder how come I found this video. That&#39;s simple. I was looking at the <a href="https://github.com/hylang/hy/" target="_blank">implementation</a> of <a href="http://hylang.org/" target="_blank">Hy language</a>, a Lisp dialect that&#39;s embedded in Python. Hy simply uses a the <a href="https://github.com/alex/rply" target="_blank">rply</a> lexer (that is a port of David Beazley&#39;s <a href="http://www.dabeaz.com/ply/" target="_blank">PLY</a> to RPython created by Alex Gaynor) to create AST trees which are remapped to Python AST tress (using the <a href="http://docs.python.org/3.3/library/ast.html" target="_blank"><code>ast</code></a> module) and compiled seamlessly in python bytecode. If you wanna give it a try there&#39;s also an <a href="http://try-hy.appspot.com/" target="_blank">online interpreter</a> where you can eval hy code on the fly. You can try some fibonacci code:</li>
+</ul>
+<figure class="highlight"><figcaption><span>Fibonacci inHy</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>    <span class="list">(<span class="title"><span class="built_in">defn</span></span> fibo <span class="collection">[n]</span>
+      <span class="list">(<span class="title"><span class="built_in">if</span></span> <span class="list">(<span class="title"><span class="built_in">&lt;=</span></span> n<span class="number"> 1</span>)</span>
+        n
+        <span class="list">(<span class="title"><span class="built_in">+</span></span> <span class="list">(<span class="title">fibo</span> <span class="list">(<span class="title"><span class="built_in">-</span></span> n<span class="number"> 1</span>)</span>)</span> <span class="list">(<span class="title">fibo</span> <span class="list">(<span class="title"><span class="built_in">-</span></span> n<span class="number"> 2</span>)</span>)</span>)</span>)</span>)</span>
+</pre></td></tr></table></figure>
+
+
+<ul>
+<li><p>Interested in some black security magic? I also found source code of <a href="https://github.com/chokepoint/azazel" target="_blank">azazel</a> an interesting userland rootkit that exploits <code>LD_PRELOAD</code> for hiding his presence.</p>
+</li>
+<li><p>Ok probably we are getting too serious. Better take a break and play Flappy Bird, using <a href="http://sarvagyavaish.github.io/FlappyBirdRL/" target="_blank">reinforcement learning</a>. The code of this funny experiment can be found <a href="https://github.com/SarvagyaVaish/FlappyBirdRL" target="_blank">here</a>.</p>
+</li>
+</ul>
+<p>See you next week!</p>
+<div class="video-container"><iframe src="//www.youtube.com/embed/BV7a4rufMOg" frameborder="0" allowfullscreen></iframe></div>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/lotw/">lotw</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style addthis_32x32_style">
+    
+      <a class="addthis_button_facebook"></a>
+    
+    
+      <a class="addthis_button_twitter"></a>
+    
+    
+      <a class="addthis_button_google_plusone_share"></a>
+    
+    
+    
+      <a class="addthis_button_instapaper"></a>
+    
+    
+      <a class="addthis_button_pocket"></a>
+    
+    <a class="addthis_button_compact"></a>
+    <a class="addthis_counter addthis_bubble_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</div></div>
+    <aside id="sidebar" class="alignleft"><div class="personal-info">
+  <figure>
+    
+      <a href="/">
+        <img class="personal-photo" src="https://2.gravatar.com/avatar/2c654726a87dda9a37b89b6db84700b9?r=x&s=440" alt="Francesco Piccinno">
+      </a>
+    
+    <figcaption>
+      <h3 class=>Francesco Piccinno</h3>
+      <p>I disagree with unanimity.</p>
+    </figcaption>
+  </figure>
+  <section class="social">
+    
+    
+      <a target="_blank" title="Follow me on GitHub" class="icon github depth shadow" href="http://github.com/nopper"></a>
+    
+    
+      <a target="_blank" title="LinkedIn profile" class="icon linkedin depth shadow" href="http://linkedin.com/in/francescopiccinno"></a>
+    
+    
+      <a target="_blank" title="Follow me on Twitter" class="icon twitter depth shadow" href="http://twitter.com/nopper"></a>
+    
+    
+      <a target="_blank" title="Subscribe to my blog" class="icon rss depth shadow" href="/atom.xml"></a>
+    
+  </section>
+</div>
+<div class="extras">
+  
+    
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/archpwn/">archpwn</a><small>1</small></li>
+  
+    <li><a href="/tags/bsp/">bsp</a><small>1</small></li>
+  
+    <li><a href="/tags/compression/">compression</a><small>1</small></li>
+  
+    <li><a href="/tags/cryptography/">cryptography</a><small>1</small></li>
+  
+    <li><a href="/tags/giraph/">giraph</a><small>1</small></li>
+  
+    <li><a href="/tags/graph/">graph</a><small>1</small></li>
+  
+    <li><a href="/tags/hadoop/">hadoop</a><small>1</small></li>
+  
+    <li><a href="/tags/htm/">htm</a><small>1</small></li>
+  
+    <li><a href="/tags/lotw/">lotw</a><small>3</small></li>
+  
+    <li><a href="/tags/machine-learning/">machine-learning</a><small>1</small></li>
+  
+    <li><a href="/tags/python, facebook, programming/">python, facebook, programming</a><small>1</small></li>
+  
+    <li><a href="/tags/stm/">stm</a><small>1</small></li>
+  
+    <li><a href="/tags/telegram/">telegram</a><small>1</small></li>
+  
+    <li><a href="/tags/transactional memory/">transactional memory</a><small>1</small></li>
+  
+    <li><a href="/tags/webgraph/">webgraph</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+  
+    
+<div class="widget tag">
+  <h3 class="title">Links</h3>
+  <ul class="entry">
+    
+      <li><a href="/archpwn">ArchPwn</a></li>
+    
+      <li><a href="/contacts">Contacts</a></li>
+    
+  </ul>
+</div>
+
+  
+</div></aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignright depth">
+  Theme based on <a href="http://github.com/thiagopnts/hexo-persona-dark" style="text-decoration: underline;">Persona Dark Theme</a> 
+  &copy; - 2015 Francesco Piccinno
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'noppersblog';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox({
+    helpers : {
+        title: {
+            type: 'inside'
+        }
+    }
+});
+})(jQuery);
+</script>
+
+</body>
+</html>

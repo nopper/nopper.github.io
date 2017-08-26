@@ -1,0 +1,1195 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Archives | Nopper&#39;s blog</title>
+  <meta name="author" content="Francesco Piccinno">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Nopper&#39;s blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="shortcut icon">
+  <link rel="alternate" href="atom.xml" title="Nopper&#39;s blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  <script>
+  // $(document).ready(function() {
+  //   $('#sidebar').delay(400).animate({ width: '285px' }, 500, function() {
+  //     $('.personal-info').css({display: 'table'}).hide().fadeIn(500);
+  //   });
+  // });
+  </script>
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-9430447-4', 'nopper.me');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+</script>
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignright"><div id="wrapper">
+<h2 class="archive-title">Archives</h2>
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon depth"></div>
+        <time datetime="2015-01-16T18:38:02.000Z"><a href="/2015/01/16/facebook-hacker-cup-2015-solutions-python/">Jan 16 2015</a></time>
+      
+      
+  
+    <h1 class="title depth"><a href="/2015/01/16/facebook-hacker-cup-2015-solutions-python/">Facebook Hacker Cup 2015 Solutions Python</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>In case you are wondering how to solve the problem of Facebook Hacker Cup 2015 Edition, here follows my simple solutions using in Python. I just copy pasted the code from my editor ;) No explanation the code is pretty self-explanatory and very easy to follow. I hope you find them useful.</p>
+<h1 id="cooking-the-books">Cooking the Books</h1>
+<p>Look at the <a href="https://googledrive.com/host/0B1rHL5Z9sBnVWXc0TWpBSkFBUjA" target="_blank">Problem statement</a> (<a href="https://www.facebook.com/hackercup/problems.php?pid=582062045257424&amp;round=742632349177460" target="_blank">official link</a>)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(contents)</span>:</span>
+    output = <span class="string">""</span>
+    it = iter(contents.splitlines())
+    num_testcases = int(it.next())
+
+    <span class="keyword">for</span> testcase <span class="keyword">in</span> xrange(<span class="number">1</span>, num_testcases + <span class="number">1</span>):
+        n = list(it.next())
+        l = u = int(<span class="string">''</span>.join(n))
+
+        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(len(n)):
+            <span class="keyword">for</span> j <span class="keyword">in</span> xrange(i + <span class="number">1</span>, len(n)):
+                n[i], n[j] = n[j], n[i]
+
+                <span class="keyword">if</span> n[<span class="number">0</span>] == <span class="string">'0'</span>:
+                    <span class="keyword">continue</span>
+
+                l = min(int(<span class="string">''</span>.join(n)), l)
+                u = max(int(<span class="string">''</span>.join(n)), u)
+
+                n[i], n[j] = n[j], n[i]
+
+        output += <span class="string">"Case #%d: %d %d\n"</span> % (testcase, l, u)
+
+    <span class="keyword">return</span> output
+
+
+input_file = <span class="string">"""5
+31524
+897
+123
+10
+5
+"""</span>
+
+<span class="keyword">assert</span> main(input_file) == <span class="string">"""Case #1: 13524 51324
+Case #2: 798 987
+Case #3: 123 321
+Case #4: 10 10
+Case #5: 5 5
+"""</span>
+</pre></td></tr></table></figure>
+
+
+<h1 id="new-year-s-resolution">New Year&#39;s Resolution</h1>
+<p>Look at the <a href="https://googledrive.com/host/0B1rHL5Z9sBnVMVdHeUhZSEZRbHM" target="_blank">Problem statement</a> (<a href="https://www.facebook.com/hackercup/problems.php?pid=1036037553088752&amp;round=742632349177460" target="_blank">official link</a>)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">def</span> <span class="title">solve</span><span class="params">(gp, gc, gf, xs)</span>:</span>
+    <span class="keyword">if</span> gp == <span class="number">0</span> <span class="keyword">and</span> gc == <span class="number">0</span> <span class="keyword">and</span> gf == <span class="number">0</span>:
+        <span class="keyword">return</span> <span class="keyword">True</span>
+
+    <span class="keyword">if</span> gp &lt; <span class="number">0</span> <span class="keyword">or</span> gc &lt; <span class="number">0</span> <span class="keyword">or</span> gf &lt; <span class="number">0</span>:
+        <span class="keyword">return</span> <span class="keyword">False</span>
+
+    <span class="keyword">if</span> <span class="keyword">not</span> xs:
+        <span class="keyword">return</span> <span class="keyword">False</span>
+
+    p, c, f = xs[<span class="number">0</span>]
+    xs = xs[<span class="number">1</span>:]
+
+    <span class="keyword">return</span> solve(gp - p, gc - c, gf - f, xs) <span class="keyword">or</span> solve(gp, gc, gf, xs)
+
+
+<span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(contents)</span>:</span>
+    output = <span class="string">""</span>
+    it = iter(contents.splitlines())
+    num_testcases = int(it.next())
+
+    <span class="keyword">for</span> testcase <span class="keyword">in</span> xrange(<span class="number">1</span>, num_testcases + <span class="number">1</span>):
+        gp, gc, gf = map(int, it.next().split())
+        n = int(it.next())
+
+        xs = []
+
+        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(n):
+            tup = map(int, it.next().split())
+            xs.append(tup)
+
+        xs.sort(key=<span class="keyword">lambda</span> x: x[<span class="number">0</span>])
+        solvable = solve(gp, gc, gf, xs)
+
+        output += <span class="string">"Case #%d: %s\n"</span> % (testcase, solvable <span class="keyword">and</span> <span class="string">"yes"</span> <span class="keyword">or</span> <span class="string">"no"</span>)
+
+    <span class="keyword">return</span> output
+
+
+input_file = <span class="string">"""5
+100 100 100
+1
+100 100 100
+100 100 100
+3
+10 10 40
+10 30 10
+10 60 50
+100 100 100
+5
+40 70 30
+30 10 40
+20 20 50
+10 50 90
+40 10 20
+292 264 512
+20
+909 302 261
+705 597 823
+291 51 126
+28 697 57
+593 31 826
+311 256 57
+292 14 47
+29 730 716
+12 529 146
+768 16 439
+37 472 15
+350 192 34
+163 468 238
+69 173 10
+203 72 690
+424 875 213
+223 593 292
+151 46 10
+88 90 16
+773 653 711
+991 827 352
+20
+29 560 929
+139 681 102
+144 853 10
+84 729 80
+218 20 67
+140 80 901
+428 20 500
+520 970 128
+422 419 30
+413 101 192
+467 448 501
+32 939 684
+34 20 38
+251 317 132
+588 437 10
+648 21 79
+391 25 14
+499 22 24
+854 77 361
+405 25 20
+"""</span>
+
+<span class="keyword">assert</span> main(input_file) == <span class="string">"""Case #1: yes
+Case #2: no
+Case #3: yes
+Case #4: no
+Case #5: yes
+"""</span>
+</pre></td></tr></table></figure>
+
+
+<h1 id="laser-maze">Laser Maze</h1>
+<p>Look at the <a href="https://googledrive.com/host/0B1rHL5Z9sBnVVWhxMGhEMFhodG8" target="_blank">Problem statement</a> (<a href="https://www.facebook.com/hackercup/problems.php?pid=1523599254559737&amp;round=742632349177460" target="_blank">official link</a>)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+</pre></td><td class="code"><pre><span class="keyword">import</span> sys
+
+MOVES = [(<span class="number">1</span>, <span class="number">0</span>), (<span class="number">0</span>, <span class="number">1</span>), (-<span class="number">1</span>, <span class="number">0</span>), (<span class="number">0</span>, -<span class="number">1</span>)]
+
+
+<span class="function"><span class="keyword">def</span> <span class="title">turn_lasers</span><span class="params">(lasers)</span>:</span>
+    trans = {
+        <span class="string">'&lt;'</span>: <span class="string">'^'</span>,
+        <span class="string">'^'</span>: <span class="string">'&gt;'</span>,
+        <span class="string">'&gt;'</span>: <span class="string">'v'</span>,
+        <span class="string">'v'</span>: <span class="string">'&lt;'</span>
+    }
+    <span class="keyword">return</span> [(i, j, trans[t]) <span class="keyword">for</span> i, j, t <span class="keyword">in</span> lasers]
+
+
+<span class="function"><span class="keyword">def</span> <span class="title">was_hit</span><span class="params">(x, y, lasers)</span>:</span>
+    <span class="keyword">for</span> lx, ly, t <span class="keyword">in</span> lasers:
+        <span class="keyword">if</span> lx == x:
+            <span class="keyword">if</span> t == <span class="string">'&lt;'</span> <span class="keyword">and</span> y &lt;= ly:
+                <span class="keyword">return</span> <span class="keyword">True</span>
+            <span class="keyword">if</span> t == <span class="string">'&gt;'</span> <span class="keyword">and</span> y &gt;= ly:
+                <span class="keyword">return</span> <span class="keyword">True</span>
+
+        <span class="keyword">if</span> ly == y:
+            <span class="keyword">if</span> t == <span class="string">'^'</span> <span class="keyword">and</span> x &lt;= lx:
+                <span class="keyword">return</span> <span class="keyword">True</span>
+            <span class="keyword">if</span> t == <span class="string">'v'</span> <span class="keyword">and</span> x &gt;= lx:
+                <span class="keyword">return</span> <span class="keyword">True</span>
+
+    <span class="keyword">return</span> <span class="keyword">False</span>
+
+
+<span class="function"><span class="keyword">def</span> <span class="title">solve_maze</span><span class="params">(ts, maze, lasers, visited, x, y, end)</span>:</span>
+    lasers = turn_lasers(lasers)
+    dead = was_hit(x, y, lasers)
+
+    <span class="keyword">if</span> x &lt; <span class="number">0</span> <span class="keyword">or</span> y &lt; <span class="number">0</span> <span class="keyword">or</span> x &gt;= len(maze) <span class="keyword">or</span> y &gt;= len(maze[<span class="number">0</span>]) <span class="keyword">or</span> \
+       dead <span class="keyword">or</span> (x, y, ts % <span class="number">4</span>) <span class="keyword">in</span> visited:
+        <span class="keyword">return</span> sys.maxint
+
+    <span class="keyword">if</span> (x, y) == end:
+        <span class="keyword">return</span> <span class="number">0</span>
+
+    <span class="comment"># We also consider laser positions in the state space</span>
+    visited.add((x, y, ts % <span class="number">4</span>))
+
+    <span class="keyword">return</span> <span class="number">1</span> + min(
+        (solve_maze(ts + <span class="number">1</span>, maze, lasers, visited, x + i, y + j, end)
+            <span class="keyword">for</span> i, j <span class="keyword">in</span> MOVES)
+    )
+
+
+<span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(contents)</span>:</span>
+    output = <span class="string">""</span>
+    it = iter(contents.splitlines())
+    num_testcases = int(it.next())
+
+    <span class="keyword">for</span> testcase <span class="keyword">in</span> xrange(<span class="number">1</span>, num_testcases + <span class="number">1</span>):
+        h, w = map(int, it.next().split())
+
+        maze = []
+        lasers = []
+        beg = <span class="keyword">None</span>
+        end = <span class="keyword">None</span>
+
+        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(h):
+            line = []
+            <span class="keyword">for</span> j, ch <span class="keyword">in</span> enumerate(it.next()):
+                line.append(ch)
+
+                <span class="keyword">if</span> ch == <span class="string">'S'</span>:
+                    beg = (i, j)
+                <span class="keyword">if</span> ch == <span class="string">'G'</span>:
+                    end = (i, j)
+                <span class="keyword">if</span> ch <span class="keyword">in</span> <span class="string">'&lt;&gt;^v'</span>:
+                    lasers.append((i, j, ch))
+
+            maze.append(line)
+
+        steps = min(
+            solve_maze(<span class="number">0</span>, maze, lasers, set(), beg[<span class="number">0</span>] + <span class="number">1</span>, beg[<span class="number">1</span>] + <span class="number">0</span>, end),
+            solve_maze(<span class="number">0</span>, maze, lasers, set(), beg[<span class="number">0</span>] + <span class="number">0</span>, beg[<span class="number">1</span>] + <span class="number">1</span>, end),
+            solve_maze(<span class="number">0</span>, maze, lasers, set(), beg[<span class="number">0</span>] - <span class="number">1</span>, beg[<span class="number">1</span>] + <span class="number">0</span>, end),
+            solve_maze(<span class="number">0</span>, maze, lasers, set(), beg[<span class="number">0</span>] + <span class="number">0</span>, beg[<span class="number">1</span>] - <span class="number">1</span>, end),
+        )
+
+        output += <span class="string">"Case #%d: %s\n"</span> % (
+            testcase,
+            (steps == sys.maxint) <span class="keyword">and</span> <span class="string">"impossible"</span> <span class="keyword">or</span> str(steps + <span class="number">1</span>)
+        )
+
+    <span class="keyword">return</span> output
+
+input_file = <span class="string">"""5
+2 5
+##^##
+S...G
+2 5
+##v##
+S...G
+1 5
+S..G&lt;
+1 6
+S...G&lt;
+5 5
+S....
+.....
+.&gt;v..
+.^&lt;..
+....G
+"""</span>
+
+output_file = <span class="string">"""Case #1: 6
+Case #2: 4
+Case #3: 3
+Case #4: impossible
+Case #5: 8
+"""</span>
+
+output = main(input_file)
+<span class="keyword">assert</span> output == output_file
+</pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon depth"></div>
+        <time datetime="2014-06-15T16:14:07.000Z"><a href="/2014/06/15/transactional-memory-a-survey/">Jun 15 2014</a></time>
+      
+      
+  
+    <h1 class="title depth"><a href="/2014/06/15/transactional-memory-a-survey/">Transactional Memory: a survey</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>I am sharing an old survey on Transactional Memory. The work briefly
+introduce the problem behind the realization of transactional memories
+both from an hardware and a software perspective. The abstract
+follows:</p>
+<blockquote><p>Due to its inner implications in the parallel computing field, Transactional Memory is currently one of the hottest topics in computer research, having attracted the focus of several research experts in computer architecture, programming languages and parallel programming. Although the idea to support atomic operations in programming languages is quite old, the fundamental key point for its success in attracting, also major software companies and hardware vendors, is the belief that this technology can greatly simplify the development of efficient and correct shared-memory parallel programs.  This simplification is achieved by providing to the programmer a way to specify a sequence of instructions that must appear to execute atomically. Transactional memory implementation then optimistically executes these sequences or transactions concurrently to obtain high performance.  This essay will present a survey of the existing transactional memory solutions including both software and hardware implementations by introducing concepts, real problems and hardware architecture solutions for supporting this alternative solution to conven- tional lock based synchronization mechanism.</p>
+</blockquote>
+
+
+<p>The PDF can be consulted online following <a href="https://drive.google.com/file/d/0B61spacrZJooOU45amJRY2Rxdk5PcjVQWmxUVzM5TzBSNVNF/edit?usp=sharing">this
+link</a>.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon depth"></div>
+        <time datetime="2014-06-06T19:24:51.000Z"><a href="/2014/06/06/large-graph-processing/">Jun 6 2014</a></time>
+      
+      
+  
+    <h1 class="title depth"><a href="/2014/06/06/large-graph-processing/">Large Graph Processing</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>I am writing this post to share the slides of the seminar I gave today
+here at University of Pisa about Large Graph Processing. The abstract is
+the following:</p>
+<blockquote><p>The main topic of this seminar is large graph processing. We will try to
+understand what are the problems that arise when dealing with large
+datasets and which are the most used solutions today. Specifically we
+will introduce the Bulk Synchronous Parallel (BSP) model that allows us
+to process extremely large graphs by distributing the computation to
+cluster of machines. We will then move our attention to graph
+compression. We will survey two interesting graph compression
+techniques, namely K2-trees and WebGraph. The former approach exploits
+the sparsity of adjacency matrices to achieve compression through a
+recursive spatial decomposition. The latter technique look for
+repetitions in the adjacency list in order to achieve a good compression
+ratio and fast decompression. At the end we will briefly discuss how the
+WebGraph compression algorithm coupled with HyperLogLog counters was
+used to obtain the famous “4 degree of separation” in the Facebook
+graph.</p>
+</blockquote>
+
+
+<p>You can view the slides online following this
+<a href="https://docs.google.com/presentation/d/1LG9AxU1rUabWCnnLjIDEzzrB7BSEKhtm5zLRf5C1Ly4/edit?usp=sharing" target="_blank">link</a>.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon depth"></div>
+        <time datetime="2014-03-08T11:36:37.000Z"><a href="/2014/03/08/links-of-the-week-3/">Mar 8 2014</a></time>
+      
+      
+  
+    <h1 class="title depth"><a href="/2014/03/08/links-of-the-week-3/">Links of the Week 3</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Sorry for the delay but this week I was out in Bertinoro following a PhD school. Therefore I didn&#39;t have time to update my blog. Anyway here&#39;s what happened online during my absence:</p>
+<ul>
+<li><p>Two researchers from <a href="http://labs.bromium.com/2014/02/24/bypassing-emet-4-1/" target="_blank">Bromium Labs</a> published a technical white paper describing how to bypass the security measurements of <a href="http://support.microsoft.com/kb/2458544" target="_blank">EMET</a>. You can take a look at the white paper <a href="http://bromiumlabs.files.wordpress.com/2014/02/bypassing-emet-4-1.pdf" target="_blank">here</a>.</p>
+</li>
+<li><p>I don&#39;t know why I didn&#39;t discovered this before, but now it is possible to write Scala code that gets compiled to Javascript thanks to <a href="http://www.scala-js.org/" target="_blank">Scala.js</a>. It is still an experiment and blah blah, but you can play with it using <a href="http://www.scala-js-fiddle.com/" target="_blank">Scala js fiddle</a></p>
+</li>
+<li><p>If you think that this is not hipster enough I know a project you might like: <a href="http://nodyn.io/" target="_blank">Nodyn</a>: <em>a <a href="http://nodejs.org/" target="_blank">node.js</a> compatible framework, running on the JVM powered by the <a href="http://dynjs.org/" target="_blank">DynJS</a> Javascript runtime running under <a href="http://vertx.io/" target="_blank">vert.x</a> - the polyglot application platform and event bus</em> (unbelievable).</p>
+</li>
+<li><p>Still wondering how Shazam works? Well time to clean things up with this <a href="http://willdrevo.com/fingerprinting-and-audio-recognition-with-python.html" target="_blank">article</a> describing how <a href="https://github.com/worldveil/dejavu" target="_blank">Dejavu</a> works</p>
+</li>
+<li><p>I am gonna leave you with the <a href="http://www.stephendiehl.com/llvm/" target="_blank">last link</a> of the week, that describes how to implement a JIT compiled language with Haskell and LLVM. Long read but worth it.</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon depth"></div>
+        <time datetime="2014-02-23T21:00:00.000Z"><a href="/2014/02/23/links-of-the-week-2/">Feb 23 2014</a></time>
+      
+      
+  
+    <h1 class="title depth"><a href="/2014/02/23/links-of-the-week-2/">Links of the Week 2</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>This week I don&#39;t have so much to share. But I discovered that <a href="http://sharelatex.com/" target="_blank">ShareLatex</a> is now open source and its code available for download on GitHub. You might want to <a href="https://github.com/sharelatex/sharelatex" target="_blank">download it</a> and use it inside your scientific group. That&#39;s at least what I will try to do the next week :)</p>
+<p>I am gonna leave you with an interesting video I found on the <a href="http://scikit-learn.org/" target="_blank">sklearn</a> mailing list. Jeremy Freeman explains how to use <a href="http://spark.incubator.apache.org/" target="_blank">Spark</a> and <a href="http://spark.incubator.apache.org/mllib/" target="_blank">MLlib</a> for Mapping and manipulating the brain at scale.</p>
+<div class="video-container"><iframe src="//www.youtube.com/embed/7mmcEl_1CPw" frameborder="0" allowfullscreen></iframe></div>
+
+
+<p>Of course if you are not aware of Spark go and check it out immediately! Check out the <a href="http://www.cs.berkeley.edu/~matei/papers/2012/nsdi_spark.pdf" target="_blank">paper</a> illustrating its RDD (aka Resilient Distributed Dataset) architecture. I will probably talk about bit more about this amazing project in a subsequent blog post.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon depth"></div>
+        <time datetime="2014-02-23T12:09:09.000Z"><a href="/2014/02/23/multi-party-otr/">Feb 23 2014</a></time>
+      
+      
+  
+    <h1 class="title depth"><a href="/2014/02/23/multi-party-otr/">Telegram: goto fail (twice)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Probably everyone knows that a couple of days ago <a href="https://www.facebook.com" target="_blank">Facebook</a> acquired <a href="http://www.whatsapp.com/" target="_blank">WhatsApp</a> for the astonishing price of 19 billion dollars. Anyway that&#39;s not the point of this post. The problem here is the inherent privacy problem that this acquisition involves.  Online there are tons of people that are concerned for their privacy and they are looking for possible instant messagging alternatives which are encrypted and privacy aware. Probably the one which is receiving more attention right now is <a href="https://telegram.org/" target="_blank">Telegram</a>.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/02/23/multi-party-otr/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon depth"></div>
+        <time datetime="2014-02-16T12:09:09.000Z"><a href="/2014/02/16/links-of-the-week/">Feb 16 2014</a></time>
+      
+      
+  
+    <h1 class="title depth"><a href="/2014/02/16/links-of-the-week/">Links of the Week</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>In order to keep this blog up to date I decided to create this periodic blog post format called <strong>Links of the week</strong> where I share all of my findings during the past week.</p>
+<ul>
+<li>The first link I wanna share is a YouTube video, actually a talk from <a href="http://alexgaynor.net/" target="_blank">Alex Gaynor</a> (yes one of the contributor of PyPy), with the title &quot;<em>So you want to write an interpreter?</em>&quot; from PyCon&#39;13. It just gives a pretty quick review about the basic concepts for writing an interpreter for a custom DSL, such as Lexer, Parser, AST, Bytecode-compiler and Bytecode-interpreter. If you are a rusty about these basic concepts give it a shot.</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/02/16/links-of-the-week/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon depth"></div>
+        <time datetime="2014-02-15T18:15:50.000Z"><a href="/2014/02/15/online-machine-learning-courses/">Feb 15 2014</a></time>
+      
+      
+  
+    <h1 class="title depth"><a href="/2014/02/15/online-machine-learning-courses/">Online Machine Learning courses</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Recently I gained interest in the field of Machine Learning. I am writing this post to share some links about interesting material you can freely find on the Internet.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/02/15/online-machine-learning-courses/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon depth"></div>
+        <time datetime="2013-12-01T14:06:26.000Z"><a href="/2013/12/01/archpwn-merged-blackarch/">Dec 1 2013</a></time>
+      
+      
+  
+    <h1 class="title depth"><a href="/2013/12/01/archpwn-merged-blackarch/">Hello World</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Well I guess it&#39;s time to move. It was a while since I was planning this major clean up in my public electronic life and now it&#39;s the day. For those of you who are not following my updates (which I guess comprisesthe entire universe but me) I decided to finally shut down the <a href="http://blog.archpwn.org" target="_blank">old blog</a> (that actually will at some point in the future point back here) and start a new one with the ultimate and probably illusory goal to document my new life as grown man (aka PhD, feel the subtleties?), I guess.</p>
+<p>The move is also perfectly timed, since I decided to freeze the development of <a href="http://www.archpwn.org" target="_blank">ArchPwn</a>, this old project of mine, that was not maintained anymore. For the old users which were hoping for a new release or the continuation of the project, don&#39;t worry the packages and some of the code base are being merged into <a href="http://blackarch.org/" target="_blank">BlackArch</a>, another security distro based on <a href="http://www.archlinux.org" target="_blank">ArchLinux</a>, that is being developed by <a href="https://github.com/paraxor" target="_blank">Evan Teitelman</a>, <a href="https://github.com/archey" target="_blank">Tyler Benett</a>, Levon Kayan and nrz from <a href="http://www.nullsecurity.net/" target="_blank">NullSecurity</a>. These guys are cool so I am leaving you in good hands :)</p>
+<p>I am also completely removing the old mediawiki site of ArchPwn</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignleft"><div class="personal-info">
+  <figure>
+    
+      <a href="/">
+        <img class="personal-photo" src="https://2.gravatar.com/avatar/2c654726a87dda9a37b89b6db84700b9?r=x&s=440" alt="Francesco Piccinno">
+      </a>
+    
+    <figcaption>
+      <h3 class=>Francesco Piccinno</h3>
+      <p>I disagree with unanimity.</p>
+    </figcaption>
+  </figure>
+  <section class="social">
+    
+    
+      <a target="_blank" title="Follow me on GitHub" class="icon github depth shadow" href="http://github.com/nopper"></a>
+    
+    
+      <a target="_blank" title="LinkedIn profile" class="icon linkedin depth shadow" href="http://linkedin.com/in/francescopiccinno"></a>
+    
+    
+      <a target="_blank" title="Follow me on Twitter" class="icon twitter depth shadow" href="http://twitter.com/nopper"></a>
+    
+    
+      <a target="_blank" title="Subscribe to my blog" class="icon rss depth shadow" href="/atom.xml"></a>
+    
+  </section>
+</div>
+<div class="extras">
+  
+    
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/archpwn/">archpwn</a><small>1</small></li>
+  
+    <li><a href="/tags/bsp/">bsp</a><small>1</small></li>
+  
+    <li><a href="/tags/compression/">compression</a><small>1</small></li>
+  
+    <li><a href="/tags/cryptography/">cryptography</a><small>1</small></li>
+  
+    <li><a href="/tags/giraph/">giraph</a><small>1</small></li>
+  
+    <li><a href="/tags/graph/">graph</a><small>1</small></li>
+  
+    <li><a href="/tags/hadoop/">hadoop</a><small>1</small></li>
+  
+    <li><a href="/tags/htm/">htm</a><small>1</small></li>
+  
+    <li><a href="/tags/lotw/">lotw</a><small>3</small></li>
+  
+    <li><a href="/tags/machine-learning/">machine-learning</a><small>1</small></li>
+  
+    <li><a href="/tags/python, facebook, programming/">python, facebook, programming</a><small>1</small></li>
+  
+    <li><a href="/tags/stm/">stm</a><small>1</small></li>
+  
+    <li><a href="/tags/telegram/">telegram</a><small>1</small></li>
+  
+    <li><a href="/tags/transactional memory/">transactional memory</a><small>1</small></li>
+  
+    <li><a href="/tags/webgraph/">webgraph</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+  
+    
+<div class="widget tag">
+  <h3 class="title">Links</h3>
+  <ul class="entry">
+    
+      <li><a href="/archpwn">ArchPwn</a></li>
+    
+      <li><a href="/contacts">Contacts</a></li>
+    
+  </ul>
+</div>
+
+  
+</div></aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignright depth">
+  Theme based on <a href="http://github.com/thiagopnts/hexo-persona-dark" style="text-decoration: underline;">Persona Dark Theme</a> 
+  &copy; - 2015 Francesco Piccinno
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'noppersblog';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox({
+    helpers : {
+        title: {
+            type: 'inside'
+        }
+    }
+});
+})(jQuery);
+</script>
+
+</body>
+</html>

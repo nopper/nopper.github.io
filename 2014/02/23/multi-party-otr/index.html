@@ -1,0 +1,679 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Telegram: goto fail (twice) | Nopper&#39;s blog</title>
+  <meta name="author" content="Francesco Piccinno">
+  
+  <meta name="description" content="Probably everyone knows that a couple of days ago Facebook acquired WhatsApp for the astonishing price of 19 billion dollars. Anyway that&#39;s not the point of this post. The problem here is the inherent privacy problem that this acquisition involves.  Online there are tons of people that are concerned for their privacy and they are looking for possible instant messagging alternatives which are encrypted and privacy aware. Probably the one which is receiving more attention right now is Telegram.">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Telegram: goto fail (twice)"/>
+  <meta property="og:site_name" content="Nopper&#39;s blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.ico" rel="shortcut icon">
+  <link rel="alternate" href="atom.xml" title="Nopper&#39;s blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  <script>
+  // $(document).ready(function() {
+  //   $('#sidebar').delay(400).animate({ width: '285px' }, 500, function() {
+  //     $('.personal-info').css({display: 'table'}).hide().fadeIn(500);
+  //   });
+  // });
+  </script>
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-9430447-4', 'nopper.me');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+</script>
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignright"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon depth"></div>
+        <time datetime="2014-02-23T12:09:09.000Z"><a href="/2014/02/23/multi-party-otr/">Feb 23 2014</a></time>
+      
+      
+  
+    <h1 class="depth title">Telegram: goto fail (twice)</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Probably everyone knows that a couple of days ago <a href="https://www.facebook.com" target="_blank">Facebook</a> acquired <a href="http://www.whatsapp.com/" target="_blank">WhatsApp</a> for the astonishing price of 19 billion dollars. Anyway that&#39;s not the point of this post. The problem here is the inherent privacy problem that this acquisition involves.  Online there are tons of people that are concerned for their privacy and they are looking for possible instant messagging alternatives which are encrypted and privacy aware. Probably the one which is receiving more attention right now is <a href="https://telegram.org/" target="_blank">Telegram</a>.</p>
+<a id="more"></a>
+
+<p>I gave a quick read about <a href="https://core.telegram.org/techfaq" target="_blank">protocol specification</a> and tried to understand how <a href="http://en.wikipedia.org/wiki/Off-the-Record_Messaging" target="_blank">OTR</a> messaging is implemented to offer end to end encryption and <a href="http://en.wikipedia.org/wiki/Forward_secrecy" target="_blank">Perfect Forward Secrecy</a>. I am not an expert in cryptography but here&#39;s what I understand from a quick read of the protocol:</p>
+<ul>
+<li>It is not a zero knowledge architecture. In telegram you have to trust someone, and that someone is the <em>Telegram server</em></li>
+<li>Chats and group chats are not encrypted end-to-end. What I mean here is that, although the message exchange between you and server is adequately encrypted, the server has still to decrypt (and possibly read/store/analyze your incoming messages) before relaying to the final recipient(s).</li>
+<li>Secret chats implement OTR through Diffie Hellman algorithm key exchange, but Diffie Hellman does not provide authentication by default so it is vulnerable to MITM attacks. It is theoretically possible that the Telegram server acts as <em>Mallory</em> here and intercepting every single message being exchanged between you (<em>Alice</em>) and your bestest friend <em>Bob</em>.</li>
+<li>Perfect Forward Secrecy is said to be implemented but it is not. If you want PFS you simply have to create another Secret Chat. Cool.</li>
+</ul>
+<p>What a bummer! <strong>EDIT:</strong> <em>Apparently I am not the only one who thinks that the entire protocol and trust the server approach is flawed. Take a look at this <a href="http://unhandledexpression.com/2013/12/17/telegram-stand-back-we-know-maths/" target="_blank">blog post</a> that explains each point in detail.</em> </p>
+<p>I looked around to check whether it is possible to create a zero-knowledge architecture supporting multi party OTR messaging. The first place I looked for was Wikipedia, that explicitly says:</p>
+<blockquote><p>Due to limitations of the protocol, OTR does not support multi-user group chat as of 2009 but may be implemented in the future.</p>
+<footer><strong>Wikipedia</strong><cite><a href="http://en.wikipedia.org/wiki/Off-the-Record_Messaging#Limitations" target="_blank">en.wikipedia.org/wiki/&hellip;</a></cite></footer></blockquote>
+
+
+<p>So I started searching for existing literature in this field using Google Scholar. I found several papers trying to solve the problem (see <a href="http://dl.acm.org/citation.cfm?id=1653705" target="_blank">Goldberg et al.</a> and <a href="http://dl.acm.org/citation.cfm?id=2517867" target="_blank">Liu et al.</a>). But since I am not an expert in cryptography I was looking for something lighter to read. I discovered that the problem was actually solved (I guess, but please correct me if I am wrong) by the guys behind <a href="https://getsyme.com/" target="_blank">Syme</a>, a <em>zero-knowledge key architecture and encrypted messaging platform</em>. You can find the white paper of their architecture <a href="https://github.com/symeapp/syme" target="_blank">here</a>. Starting from their premises I decided to implement a demo app in Python implementing multiparty OTR.</p>
+<p>I am gonna be using <code>pyelliptic</code>, <code>pbkdf2</code> and <code>srp</code>. The first package is a really cool binding to OpenSSL, but be sure to have an up to date version otherwise you will encounter in some trouble. If you are a Mac OS user I suggest you to install an updated version of openssl using <code>brew install openssl</code>.</p>
+<p>Then you can safely use <code>DYLD_LIBRARY_PATH=/usr/local/Cellar/openssl/1.0.1f/lib</code> prior to python invokation, as I explain in this Github <a href="https://github.com/yann2192/pyelliptic/issues/11" target="_blank">issue</a>. The second package (<code>pbkdf2</code>) provides the password-based key derivation function, <a href="http://en.wikipedia.org/wiki/PBKDF2" target="_blank">PBKDF2</a>. The latter implements the <a href="http://en.wikipedia.org/wiki/Secure_Remote_Password_protocol" target="_blank">Secure Remote Password protocol</a> (SRP), a cryptographically strong authentication protocol for password-based over an insecure network connection. You can easilly install the three dependecies with the usual <code>pip install &lt;packagename&gt;</code>.</p>
+<p>You can find the code of this <a href="https://github.com/nopper/secure-chat-demo" target="_blank">demo</a> on GitHub. I am not going to do a step by step explanation of the code but rather explain what it happens from an high level perspective. First we import all the libraries:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="keyword">import</span> json
+<span class="keyword">import</span> pbkdf2
+<span class="keyword">from</span> srp <span class="keyword">import</span> _pysrp <span class="keyword">as</span> srp
+<span class="keyword">import</span> pyelliptic
+</pre></td></tr></table></figure>
+
+
+<p>We then define an helper class for dealing with <a href="http://en.wikipedia.org/wiki/Advanced_Encryption_Standard" target="_blank">AES</a>-<a href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher_feedback_.28CFB.29" target="_blank">CFB</a> (256 bit key) encryption/decription of texts.  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td><td class="code"><pre><span class="class"><span class="keyword">class</span> <span class="title">AESCipher</span><span class="params">(object)</span>:</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, key)</span>:</span>
+        self.key = key
+
+    <span class="function"><span class="keyword">def</span> <span class="title">pad</span><span class="params">(self, s)</span>:</span>
+        BS = <span class="number">16</span>
+        <span class="keyword">return</span> s + (BS - len(s) % BS) * chr(BS - len(s) % BS) 
+
+    <span class="function"><span class="keyword">def</span> <span class="title">unpad</span><span class="params">(self, s)</span>:</span>
+        <span class="keyword">return</span> s[<span class="number">0</span>:-ord(s[-<span class="number">1</span>])]
+
+    <span class="function"><span class="keyword">def</span> <span class="title">encrypt</span><span class="params">(self, raw)</span>:</span>
+        raw = self.pad(raw)
+        iv = pyelliptic.Cipher.gen_IV(<span class="string">'aes-256-cfb'</span>)
+        ctx = pyelliptic.Cipher(self.key, iv, <span class="number">1</span>, ciphername=<span class="string">'aes-256-cfb'</span>)
+        ciphertext = ctx.update(raw)
+        ciphertext += ctx.final()
+        <span class="keyword">return</span> (iv + ciphertext).encode(<span class="string">"hex"</span>)
+
+    <span class="function"><span class="keyword">def</span> <span class="title">decrypt</span><span class="params">(self, enc)</span>:</span>
+        enc = enc.decode(<span class="string">"hex"</span>)
+        (iv, enc) = enc[:<span class="number">16</span>], enc[<span class="number">16</span>:]
+        ctx = pyelliptic.Cipher(self.key, iv, <span class="number">0</span>, ciphername=<span class="string">'aes-256-cfb'</span>)
+        <span class="keyword">return</span> self.unpad(ctx.ciphering(enc))
+</pre></td></tr></table></figure>
+
+
+<p>We then define a class for our zero-knowledge server, as in Syme whitepaper. The server will just store a salt and a verification key for each user (SRP protocol). The server can additionally store the keychain of each user (encrypted with the other <code>initialization_key</code> of the client), if the user is willing to do so.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre></td><td class="code"><pre><span class="class"><span class="keyword">class</span> <span class="title">Server</span><span class="params">(object)</span>:</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span>
+        self.users = {}
+        self.verifiers = {}
+        self.storage = {}
+
+    <span class="function"><span class="keyword">def</span> <span class="title">auth_request</span><span class="params">(self, username, A)</span>:</span>
+        salt, vkey = self.users[username]
+
+        verifier = srp.Verifier(username, salt, vkey, A)
+        s, B = verifier.get_challenge()
+
+        self.verifiers[username] = verifier
+
+        <span class="keyword">return</span> s, B
+
+    <span class="function"><span class="keyword">def</span> <span class="title">verify_session</span><span class="params">(self, username, M)</span>:</span>
+        HAMK = self.verifiers[username].verify_session(M)
+
+        <span class="keyword">if</span> HAMK <span class="keyword">is</span> <span class="keyword">None</span>:
+            <span class="keyword">raise</span> srp.AuthenticationFailed()
+
+        <span class="keyword">return</span> HAMK
+
+    <span class="function"><span class="keyword">def</span> <span class="title">store</span><span class="params">(self, username, **kwargs)</span>:</span>
+        self.storage[username] = kwargs
+        <span class="keyword">print</span> <span class="string">"Stored %s for %s"</span> % (<span class="string">', '</span>.join(kwargs.keys()), username)
+</pre></td></tr></table></figure>
+
+
+<p>We then define <code>User</code> object representing the user that tries to register to the <code>Server</code> and communicates with other peers through the use of <code>send_message</code> primitive. Here we assume the server to correctly deliver ECC public keys. MITM attack is possible if the server is acting as a rouge server. In order to solve this problem the exchange of keys can be executed offline. In this case <em>Alice</em> and <em>Bob</em> will set up an appointment in the public park to exchange their public keys. Another approach is using the <a href="http://en.wikipedia.org/wiki/Socialist_millionaire" target="_blank">Socialist Millionaire problem</a> (funny name) as in Section 2.3.5 of <a href="http://www.cypherpunks.ca/~iang/pubs/otr_userstudy.pdf" target="_blank">A User Study of Off-the-Record Messaging </a>.</p>
+<p>Creating a group chat (2 or more peers) involves the creation of new ECC key pairs for each peer. In this way it is possible to easilly implement forward secrecy. For example, every day the peers can decide to generate new key pairs.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">def</span> <span class="title">create_verification_key</span><span class="params">(user, salt)</span>:</span>
+    hash_class = user.hash_class
+    <span class="keyword">return</span> srp.long_to_bytes(pow(user.g, srp.gen_x(hash_class, salt, user.I, user.p), user.N))
+
+<span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(object)</span>:</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, username, password)</span>:</span>
+        self.username = username
+        self.salt = srp.long_to_bytes(srp.get_random(<span class="number">16</span>))
+
+        key = pbkdf2.PBKDF2(password, self.salt).read(<span class="number">64</span>)
+        self.authentication_key, self.initialization_key = (key[:<span class="number">32</span>], key[<span class="number">32</span>:])
+
+        self.cipher = AESCipher(self.initialization_key)
+        self.ecc_key = pyelliptic.ECC()
+
+        self.keychain = {
+            self.username: self.ecc_key.get_pubkey(),
+        }
+
+        self.ecc_group_key = {}
+        self.group_keys = {}
+
+    <span class="function"><span class="keyword">def</span> <span class="title">get_srp_user</span><span class="params">(self)</span>:</span>
+        username = self.username
+        password = self.initialization_key
+        <span class="keyword">return</span> srp.User(username, password)
+
+    <span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(self, server)</span>:</span>
+        <span class="keyword">assert</span> self.username <span class="keyword">not</span> <span class="keyword">in</span> server.users, <span class="string">"%s already registered"</span> % self.username
+
+        salt = self.salt
+        user = self.get_srp_user()
+
+        server.users[self.username] = (salt, create_verification_key(user, salt))
+
+    <span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(self, server)</span>:</span>
+        user = self.get_srp_user()
+        username, A = user.start_authentication()
+
+        <span class="comment"># We send username and A to the server and obtain a challenge</span>
+        s, B = server.auth_request(username, A)
+        M = user.process_challenge(s, B)
+
+        <span class="keyword">if</span> M <span class="keyword">is</span> <span class="keyword">None</span>:
+            <span class="keyword">raise</span> srp.AuthenticationFailed()
+
+        <span class="comment"># Send M to the verifier</span>
+        HAMK = server.verify_session(username, M)
+        user.verify_session(HAMK)
+
+        <span class="keyword">if</span> user.authenticated():
+            <span class="keyword">print</span> <span class="string">"Successfully logged in"</span>
+
+            encrypted = self.cipher.encrypt(self.ecc_key.get_pubkey())
+
+            server.store(username, mykey=encrypted)
+
+    <span class="function"><span class="keyword">def</span> <span class="title">create_group</span><span class="params">(self, name, users)</span>:</span>
+        <span class="comment"># Now every other user will generate a pub/key pair</span>
+        <span class="keyword">for</span> user <span class="keyword">in</span> users:
+            user.ecc_group_key[name] = pyelliptic.ECC()
+            user.group_keys[name] = {
+                user.username: user.ecc_group_key[name].get_pubkey()
+            }
+
+        <span class="keyword">for</span> source <span class="keyword">in</span> users:
+            <span class="keyword">for</span> dest <span class="keyword">in</span> users:
+                <span class="keyword">if</span> source != dest:
+                    source.group_keys[name][dest.username] = dest.ecc_group_key[name].get_pubkey()
+
+
+    <span class="function"><span class="keyword">def</span> <span class="title">send_message</span><span class="params">(self, name, message)</span>:</span>
+        session_key = pyelliptic.OpenSSL.rand(<span class="number">32</span>)
+        ekeys = []
+
+        <span class="keyword">for</span> username, pubkey <span class="keyword">in</span> self.group_keys[name].items():
+            ecc_key = self.ecc_group_key[name]
+            ekeys.append(ecc_key.encrypt(session_key, pubkey).encode(<span class="string">'hex'</span>))
+
+        c = AESCipher(session_key)
+        emessage = c.encrypt(message)
+
+        encoded = json.dumps({
+            <span class="string">'group'</span>: name,
+            <span class="string">'message'</span>: emessage,
+            <span class="string">'keys'</span>: ekeys,
+        })
+
+        <span class="keyword">return</span> Message(self.username, self.ecc_key.sign(encoded), encoded)
+</pre></td></tr></table></figure>
+
+
+
+<p>The last piece missing is the <code>Message</code> class representing the message being exchanged between peers:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td><td class="code"><pre><span class="class"><span class="keyword">class</span> <span class="title">Message</span><span class="params">(object)</span>:</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, source, signature, encoded)</span>:</span>
+        self.source = source
+        self.signature = signature
+        self.encoded = encoded
+
+    <span class="function"><span class="keyword">def</span> <span class="title">verify</span><span class="params">(self, user)</span>:</span>
+        pubkey_source = user.keychain[self.source]
+        <span class="keyword">return</span> pyelliptic.ECC(pubkey=pubkey_source).verify(self.signature, self.encoded)
+
+    <span class="function"><span class="keyword">def</span> <span class="title">read</span><span class="params">(self, user)</span>:</span>
+        decoded = json.loads(self.encoded)
+        ecc_key = user.ecc_group_key[decoded[<span class="string">'group'</span>]]
+
+        <span class="keyword">for</span> key <span class="keyword">in</span> decoded[<span class="string">'keys'</span>]:
+            <span class="keyword">try</span>:
+                session_key = ecc_key.decrypt(key.decode(<span class="string">'hex'</span>))
+                c = AESCipher(session_key)
+                <span class="keyword">print</span> <span class="string">"%s received: %s"</span> % (user.username, c.decrypt(decoded[<span class="string">'message'</span>]))
+                <span class="keyword">return</span>
+            <span class="keyword">except</span>:
+                <span class="keyword">print</span> <span class="string">"Trying next key"</span>
+</pre></td></tr></table></figure>
+
+
+<p>Now you can try to play the secure chat game easilly:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="code"><pre>server = Server()
+
+alice = User(<span class="string">"Alice"</span>, <span class="string">"hello"</span>)
+alice.register(server)
+alice.login(server)
+
+bob = User(<span class="string">"Bob"</span>, <span class="string">"hello"</span>)
+bob.register(server)
+bob.login(server)
+
+alice.create_group(<span class="string">'#lmv'</span>, (alice, bob))
+message = alice.send_message(<span class="string">'#lmv'</span>, <span class="string">'Hello there'</span>)
+
+message.read(bob)
+message.read(alice)
+</pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre>Successfully logged in
+Stored mykey for Alice
+Successfully logged in
+Stored mykey for Bob
+Bob received: Hello there
+Trying next key
+Alice received: Hello there
+</pre></td></tr></table></figure>
+
+
+<p><strong>DISCLAIMER:</strong> This entire protocol might be wrong and flawed. I am not a cryptographer so use the information of this blog post at your own discretion and risk.</p>
+<p><em>PS: for those of you who understand the reference yes the title of this post referes to the Apple bug in SSL stack. If you are intereseted in reading more about it, check out <a href="http://www.msuiche.net/2014/02/22/sslverifysignedserverkeyexchange-a-k-a-the-goto-epicfail-bug/" target="_blank">this link</a>.</em></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/telegram/">telegram</a>, <a href="/tags/cryptography/">cryptography</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style addthis_32x32_style">
+    
+      <a class="addthis_button_facebook"></a>
+    
+    
+      <a class="addthis_button_twitter"></a>
+    
+    
+      <a class="addthis_button_google_plusone_share"></a>
+    
+    
+    
+      <a class="addthis_button_instapaper"></a>
+    
+    
+      <a class="addthis_button_pocket"></a>
+    
+    <a class="addthis_button_compact"></a>
+    <a class="addthis_counter addthis_bubble_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</div></div>
+    <aside id="sidebar" class="alignleft"><div class="personal-info">
+  <figure>
+    
+      <a href="/">
+        <img class="personal-photo" src="https://2.gravatar.com/avatar/2c654726a87dda9a37b89b6db84700b9?r=x&s=440" alt="Francesco Piccinno">
+      </a>
+    
+    <figcaption>
+      <h3 class=>Francesco Piccinno</h3>
+      <p>I disagree with unanimity.</p>
+    </figcaption>
+  </figure>
+  <section class="social">
+    
+    
+      <a target="_blank" title="Follow me on GitHub" class="icon github depth shadow" href="http://github.com/nopper"></a>
+    
+    
+      <a target="_blank" title="LinkedIn profile" class="icon linkedin depth shadow" href="http://linkedin.com/in/francescopiccinno"></a>
+    
+    
+      <a target="_blank" title="Follow me on Twitter" class="icon twitter depth shadow" href="http://twitter.com/nopper"></a>
+    
+    
+      <a target="_blank" title="Subscribe to my blog" class="icon rss depth shadow" href="/atom.xml"></a>
+    
+  </section>
+</div>
+<div class="extras">
+  
+    
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/archpwn/">archpwn</a><small>1</small></li>
+  
+    <li><a href="/tags/bsp/">bsp</a><small>1</small></li>
+  
+    <li><a href="/tags/compression/">compression</a><small>1</small></li>
+  
+    <li><a href="/tags/cryptography/">cryptography</a><small>1</small></li>
+  
+    <li><a href="/tags/giraph/">giraph</a><small>1</small></li>
+  
+    <li><a href="/tags/graph/">graph</a><small>1</small></li>
+  
+    <li><a href="/tags/hadoop/">hadoop</a><small>1</small></li>
+  
+    <li><a href="/tags/htm/">htm</a><small>1</small></li>
+  
+    <li><a href="/tags/lotw/">lotw</a><small>3</small></li>
+  
+    <li><a href="/tags/machine-learning/">machine-learning</a><small>1</small></li>
+  
+    <li><a href="/tags/python, facebook, programming/">python, facebook, programming</a><small>1</small></li>
+  
+    <li><a href="/tags/stm/">stm</a><small>1</small></li>
+  
+    <li><a href="/tags/telegram/">telegram</a><small>1</small></li>
+  
+    <li><a href="/tags/transactional memory/">transactional memory</a><small>1</small></li>
+  
+    <li><a href="/tags/webgraph/">webgraph</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+  
+    
+<div class="widget tag">
+  <h3 class="title">Links</h3>
+  <ul class="entry">
+    
+      <li><a href="/archpwn">ArchPwn</a></li>
+    
+      <li><a href="/contacts">Contacts</a></li>
+    
+  </ul>
+</div>
+
+  
+</div></aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignright depth">
+  Theme based on <a href="http://github.com/thiagopnts/hexo-persona-dark" style="text-decoration: underline;">Persona Dark Theme</a> 
+  &copy; - 2015 Francesco Piccinno
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'noppersblog';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox({
+    helpers : {
+        title: {
+            type: 'inside'
+        }
+    }
+});
+})(jQuery);
+</script>
+
+</body>
+</html>
